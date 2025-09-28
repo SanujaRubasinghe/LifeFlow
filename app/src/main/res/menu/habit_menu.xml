@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_sort_name"
+        android:title="Sort by Name"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_progress"
+        android:title="Sort by Progress"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_created"
+        android:title="Sort by Date Created"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_filter_completed"
+        android:title="Show Completed Only"
+        android:checkable="true"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_reset_today"
+        android:title="Reset Today's Progress"
+        app:showAsAction="never" />
+
+</menu>

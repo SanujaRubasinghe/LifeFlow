@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/context_edit_habit"
+        android:title="Edit Habit"
+        android:icon="@drawable/ic_edit" />
+
+    <item
+        android:id="@+id/context_duplicate_habit"
+        android:title="Duplicate Habit"
+        android:icon="@drawable/ic_duplicate" />
+
+    <item
+        android:id="@+id/context_habit_history"
+        android:title="View History"
+        android:icon="@drawable/ic_history" />
+
+    <item
+        android:id="@+id/context_habit_stats"
+        android:title="Statistics"
+        android:icon="@drawable/ic_stats" />
+
+    <item
+        android:id="@+id/context_reset_habit"
+        android:title="Reset Progress"
+        android:icon="@drawable/ic_refresh" />
+
+    <item
+        android:id="@+id/context_delete_habit"
+        android:title="Delete Habit"
+        android:icon="@drawable/ic_delete" />
+</menu>

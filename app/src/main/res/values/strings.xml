@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Health Tracker</string>
+    <string-array name="gender_options">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="widget_description">Shows your daily habit progress</string>
+    <string name="widget_title">Daily Habits</string>
+    <string name="widget_completed">%1$d/%2$d completed</string>
+    <string name="widget_updated">Updated: %1$s</string>
+</resources>

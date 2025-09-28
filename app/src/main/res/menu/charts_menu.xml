@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_time_range"
+        android:title="Time Range">
+        <menu>
+            <item
+                android:id="@+id/range_week"
+                android:title="Last 7 Days"
+                android:checkable="true"
+                android:checked="true" />
+            <item
+                android:id="@+id/range_month"
+                android:title="Last Month"
+                android:checkable="true" />
+            <item
+                android:id="@+id/range_three_months"
+                android:title="Last 3 Months"
+                android:checkable="true" />
+            <item
+                android:id="@+id/range_year"
+                android:title="Last Year"
+                android:checkable="true" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/action_chart_type"
+        android:title="Chart Type">
+        <menu>
+            <item
+                android:id="@+id/chart_line"
+                android:title="Line Chart"
+                android:checkable="true"
+                android:checked="true" />
+            <item
+                android:id="@+id/chart_bar"
+                android:title="Bar Chart"
+                android:checkable="true" />
+            <item
+                android:id="@+id/chart_pie"
+                android:title="Pie Chart"
+                android:checkable="true" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/action_export_chart"
+        android:title="Export Chart"
+        app:showAsAction="never" />
+
+</menu>

@@ -19,6 +19,12 @@ class HealthPreferenceManager private constructor(context: Context) {
         private const val KEY_USER_LOGGED_IN = "user_logged_in"
         private const val KEY_USER_PROFILE = "user_profile"
 
+        private const val KEY_FIRST_LOGIN_DATE = "first_login_date"
+
+        private const val KEY_LAST_LOGIN_DATE = "last_login_date"
+
+        private const val KEY_STREAK_COUNTER = "streak_counter"
+
         private const val KEY_HABITS = "user_habits"
         private const val KEY_MOOD_ENTRIES = "mood_entries"
         private const val KEY_HYDRATION_INTERVAL = "hydration_interval"
@@ -55,11 +61,47 @@ class HealthPreferenceManager private constructor(context: Context) {
         return sharedPreferences.getBoolean(KEY_USER_LOGGED_IN, false)
     }
 
+    fun setFirstLoginDate() {
+        val date = getTodayDate()
+        sharedPreferences.edit {putString(KEY_FIRST_LOGIN_DATE, date)}
+    }
+
+    fun getFirstLoginDate(): Long {
+        val today = System.currentTimeMillis()
+        return sharedPreferences.getLong(KEY_FIRST_LOGIN_DATE, today)
+    }
+
+    fun setLastLoginDate() {
+        val today = getTodayDate()
+        val lastLogin = sharedPreferences.getString(KEY_LAST_LOGIN_DATE, null)
+
+        if (lastLogin == null || lastLogin != today) {
+            sharedPreferences.edit { putString(KEY_LAST_LOGIN_DATE, today) }
+            val streakCount = sharedPreferences.getInt(KEY_STREAK_COUNTER, 0)
+            sharedPreferences.edit{putInt(KEY_STREAK_COUNTER, streakCount + 1)}
+        }
+    }
+
+    fun getLastLoginDate(): Long {
+        val today = System.currentTimeMillis()
+        return sharedPreferences.getLong(KEY_LAST_LOGIN_DATE, today)
+    }
+
+    private fun getTodayDate(): String {
+        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+        return sdf.format(java.util.Date())
+    }
+
+    fun getStreakCount(): Int {
+        return sharedPreferences.getInt(KEY_STREAK_COUNTER, 0)
+    }
+
     data class UserProfile(
         val name: String,
         val age: Int,
-        val weight: Float,
-        val height: Float
+        val email: String,
+        val password: String,
+        val gender: String,
     )
 
     fun saveUserProfile(profile: UserProfile) {

@@ -6,4 +6,35 @@
     </style>
 
     <style name="Theme.HealthTracker" parent="Base.Theme.HealthTracker" />
+
+    <style name="NoNavItemBackground" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemBackground">@android:color/transparent</item>
+        <item name="itemRippleColor">@null</item>
+    </style>
+
+    <style name="ModernTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/primary_color</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="hintTextColor">@color/sub_title_text_color</item>
+        <item name="startIconTint">@color/sub_title_text_color</item>
+        <item name="endIconTint">@color/sub_title_text_color</item>
+    </style>
+
+    <style name="ModernPrimaryButton" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/primary_color</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="ModernSecondaryButton" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/accent_color</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="strokeColor">@color/accent_color</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="strokeWidth">2dp</item>
+    </style>
+
 </resources>

@@ -3,6 +3,7 @@ package com.example.healthtracker.activities
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -20,6 +21,7 @@ import com.example.healthtracker.fragments.ChartsFragment
 import com.example.healthtracker.fragments.HabitTrackerFragment
 import com.example.healthtracker.fragments.MoodJournalFragment
 import com.example.healthtracker.fragments.SettingsFragment
+import com.example.healthtracker.fragments.UserProfileFragment
 import com.example.healthtracker.services.HydrationReminderWorker
 import com.example.healthtracker.utils.HealthPreferenceManager
 import java.util.concurrent.TimeUnit
@@ -45,6 +47,9 @@ class MainActivity : AppCompatActivity() {
 
         sharedPrefsManager = HealthPreferenceManager.getInstance(this)
 
+        checkLoginStatus()
+        sharedPrefsManager.setLastLoginDate()
+
         setupUI()
         requestNotificationPermission()
 
@@ -61,8 +66,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkLoginStatus() {
+        val loggedIn: Boolean = sharedPrefsManager.isUserLoggedIn()
+        if (!loggedIn) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
     private fun setupUI() {
+
+        val states = arrayOf(
+            intArrayOf(android.R.attr.state_checked),
+            intArrayOf(-android.R.attr.state_checked)
+        )
+
+        val colors = intArrayOf(
+            ContextCompat.getColor(this, R.color.nav_item_select),
+            ContextCompat.getColor(this, R.color.white)
+        )
+
+        val colorStateList = ColorStateList(states, colors)
+
         bottomNavigation = findViewById(R.id.bottom_navigation)
+        bottomNavigation.setBackgroundColor(ContextCompat.getColor(this, R.color.navbar_background))
+        bottomNavigation.itemIconTintList = colorStateList
+        bottomNavigation.itemTextColor = colorStateList
+
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_habits -> {
@@ -77,8 +108,8 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(ChartsFragment())
                     true
                 }
-                R.id.nav_settings -> {
-                    loadFragment(SettingsFragment())
+                R.id.nav_profile -> {
+                    loadFragment(UserProfileFragment())
                     true
                 }
                 else -> false

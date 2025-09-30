@@ -1,5 +1,6 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_habit"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -39,17 +40,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Habit Name"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/tv_habit_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Description"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
                     android:layout_marginTop="4dp"
                     android:maxLines="2"
                     android:ellipsize="end" />
@@ -87,6 +88,7 @@
                     android:layout_weight="1"
                     android:text="0 / 1 times"
                     android:textSize="14sp"
+                    android:textColor="@color/white"
                     android:textStyle="bold" />
 
                 <TextView
@@ -94,8 +96,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0%"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white" />
 
             </LinearLayout>
 
@@ -126,7 +128,9 @@
                 android:text="-"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:backgroundTint="#F44336"
                 android:layout_marginEnd="16dp" />
 
             <TextView
@@ -134,9 +138,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Tap progress bar to edit directly"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textAlignment="center"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@android:color/white"
                 android:alpha="0.7" />
 
             <Button
@@ -146,7 +150,9 @@
                 android:text="+"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                style="@style/Widget.MaterialComponents.Button"
+                android:textColor="@color/white"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:backgroundTint="#4caf50"
                 android:layout_marginStart="16dp" />
 
         </LinearLayout>

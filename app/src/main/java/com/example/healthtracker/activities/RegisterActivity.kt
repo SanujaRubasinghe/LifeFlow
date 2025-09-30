@@ -1,8 +1,10 @@
 package com.example.healthtracker.activities
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
@@ -11,6 +13,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.example.healthtracker.R
+import com.example.healthtracker.utils.HealthPreferenceManager
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var genderSpinner: Spinner
@@ -20,10 +23,14 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
     private lateinit var registerBtn: Button
 
+    private lateinit var sharedPreferences: HealthPreferenceManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_register)
+
+        sharedPreferences = HealthPreferenceManager.getInstance(this)
 
         genderSpinner = findViewById(R.id.spinner_gender)
         nameEditText = findViewById(R.id.name)
@@ -49,8 +56,8 @@ class RegisterActivity : AppCompatActivity() {
     private fun saveUserData() {
         val name = nameEditText.text.toString()
         val age = ageEditText.text.toString()
-        val email = emailEditText.toString()
-        val password = passwordEditText.toString()
+        val email = emailEditText.text.toString()
+        val password = passwordEditText.text.toString()
         val gender = genderSpinner.selectedItem.toString()
 
         if (name.isEmpty() || age.isEmpty() || email.isEmpty() || password.isEmpty()) {
@@ -58,16 +65,16 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-        sharedPref.edit {
-            putString("NAME", name)
-            putInt("AGE", age.toInt())
-            putString("EMAIL", email)
-            putString("PASSWORD", password)
-            putString("GENDER", gender)
-            putBoolean("IS_REGISTERED", true)
-            putBoolean("IS_LOGGED", true)
-        }
+        val userProfile = HealthPreferenceManager.UserProfile(
+            name,
+            age.toInt(),
+            email,
+            password,
+            gender)
+
+        sharedPreferences.saveUserProfile(userProfile)
+        sharedPreferences.setFirstLoginDate()
+        sharedPreferences.setUserLoggedIn(true)
 
         Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show()
         startActivity(Intent(this, MainActivity::class.java))

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.NumberPicker
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.example.healthtracker.R
 import com.example.healthtracker.adapters.HabitAdapter
 import com.example.healthtracker.models.Habit
+import com.example.healthtracker.utils.GreetingHelper
 import com.example.healthtracker.utils.HealthPreferenceManager
 import com.example.healthtracker.utils.SensorHelper
 
@@ -45,6 +47,9 @@ class HabitTrackerFragment : Fragment() {
 
         sharedPrefsManager = HealthPreferenceManager.Companion.getInstance(requireContext())
         sensorHelper = SensorHelper(requireContext())
+
+        val tvGreeting: TextView = view.findViewById(R.id.tv_greeting)
+        GreetingHelper.setGreeting(requireContext(), tvGreeting, "Habit")
 
         setupUI(view)
         loadHabits()

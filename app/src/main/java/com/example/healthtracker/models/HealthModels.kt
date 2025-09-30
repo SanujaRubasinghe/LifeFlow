@@ -28,12 +28,13 @@ data class Habit(
     @SerializedName("completions")
     var completions: MutableMap<String, Int> = mutableMapOf()
 ) {
+    var color: Int? = null
     fun getCompletionForDate(date: String): Int {
         return completions[date] ?: 0
     }
 
     fun isCompletedForDate(date: String): Boolean {
-        return getCompletionForDate(date) == targetCount
+        return getCompletionForDate(date) >= targetCount
     }
 
     fun addCompletion(date: String, count: Int = 1) {

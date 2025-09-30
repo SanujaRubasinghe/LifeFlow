@@ -16,6 +16,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.example.healthtracker.R
 import com.example.healthtracker.models.MoodEntry
+import com.example.healthtracker.utils.GreetingHelper
 import com.example.healthtracker.utils.HealthPreferenceManager
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,6 +42,8 @@ class ChartsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         sharedPrefsManager = HealthPreferenceManager.getInstance(requireContext())
+        val tvGreeting: TextView = view.findViewById(R.id.tv_greeting)
+        GreetingHelper.setGreeting(requireContext(), tvGreeting, "Charts")
 
         setupUI(view)
         loadCharts()

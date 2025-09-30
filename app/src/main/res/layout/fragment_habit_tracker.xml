@@ -2,33 +2,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="@color/bg_color"
+    android:paddingTop="30dp">
 
     <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="0dp"
+        android:id="@+id/tv_greeting"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Daily Habits"
+        android:text="Good Morning, User!"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/primary_text_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="16dp"/>
 
-    <TextView
-        android:id="@+id/tv_subtitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Track your wellness journey"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:textColor="@android:color/darker_gray"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+<!--    <TextView-->
+<!--        android:id="@+id/tv_title"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Daily Habits"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_greeting"-->
+<!--        android:layout_marginTop="10dp"/>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_subtitle"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Track your wellness journey"-->
+<!--        android:textSize="16sp"-->
+<!--        android:gravity="center"-->
+<!--        android:textColor="@android:color/darker_gray"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tv_greeting" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_habits"
@@ -39,7 +54,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
+        app:layout_constraintTop_toBottomOf="@id/tv_greeting" />
 
     <TextView
         android:id="@+id/tv_empty_state"
@@ -62,6 +77,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/ic_add"
+        android:backgroundTint="@color/accent_color"
+        app:tint="@color/white"
         android:contentDescription="Add new habit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    android:padding="16dp">
+    android:paddingTop="30dp"
+    android:paddingHorizontal="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,7 +67,7 @@
                     android:id="@+id/member_since_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2024"
+                    android:text="2025"
                     android:textSize="12sp"
                     android:textColor="@color/primary_text_color"
                     android:textStyle="bold" />
@@ -211,6 +212,17 @@
             android:textSize="16sp"
             style="@style/ModernSecondaryButton"
             app:icon="@drawable/ic_logout"
+            android:layout_marginBottom="16dp"
+            app:iconGravity="textStart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/demo_notification_button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Demo Hydration Notification"
+            android:textSize="16sp"
+            style="@style/ModernSecondaryButton"
+            android:backgroundTint="@color/primary_dark"
             app:iconGravity="textStart" />
 
     </LinearLayout>

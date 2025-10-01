@@ -18,6 +18,8 @@ import com.example.healthtracker.R
 import com.example.healthtracker.models.MoodEntry
 import com.example.healthtracker.utils.GreetingHelper
 import com.example.healthtracker.utils.HealthPreferenceManager
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.LimitLine
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,6 +30,9 @@ class ChartsFragment : Fragment() {
     private lateinit var habitChart: PieChart
     private lateinit var tvMoodStats: TextView
     private lateinit var tvHabitStats: TextView
+
+    private lateinit var barChartSteps: BarChart
+    private var stepGoal: Int = 10000
     private lateinit var sharedPrefsManager: HealthPreferenceManager
 
     override fun onCreateView(
@@ -54,10 +59,50 @@ class ChartsFragment : Fragment() {
         habitChart = view.findViewById(R.id.habit_chart)
         tvMoodStats = view.findViewById(R.id.tv_mood_stats)
         tvHabitStats = view.findViewById(R.id.tv_habit_stats)
+        barChartSteps = view.findViewById(R.id.barChartSteps)
+
+        stepGoal = sharedPrefsManager.getStepGoal()
 
         setupMoodChart()
         setupHabitChart()
+        setupStepChart()
     }
+
+    private fun setupStepChart() {
+        barChartSteps.apply {
+            description.isEnabled = false
+            setDrawGridBackground(false)
+            setDrawBarShadow(false)
+            setFitBars(true)
+            setTouchEnabled(true)
+            setPinchZoom(false)
+            setBackgroundColor(Color.WHITE)
+
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+                setDrawGridLines(false)
+                granularity = 1f
+            }
+
+            axisLeft.apply {
+                axisMinimum = 0f
+                axisMaximum = (stepGoal * 1.5).toFloat()
+                setDrawGridLines(true)
+            }
+
+            axisRight.isEnabled = false
+            legend.isEnabled = false
+
+            // Add horizontal line for step goal
+            val limitLine = LimitLine(stepGoal.toFloat(), "Goal")
+            limitLine.lineColor = Color.RED
+            limitLine.lineWidth = 2f
+            limitLine.textColor = Color.RED
+            limitLine.textSize = 12f
+            axisLeft.addLimitLine(limitLine)
+        }
+    }
+
 
     private fun setupMoodChart() {
         moodChart.apply {

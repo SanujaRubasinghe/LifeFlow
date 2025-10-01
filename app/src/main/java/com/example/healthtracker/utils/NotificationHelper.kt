@@ -11,6 +11,7 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.healthtracker.R
 import com.example.healthtracker.activities.MainActivity
 
 
@@ -77,6 +78,7 @@ class NotificationHelper(private val context: Context) {
         )
 
         val notification = NotificationCompat.Builder(context, CHANNEL_HYDRATION)
+            .setSmallIcon(R.drawable.ic_water_drop)
             .setContentTitle("💧 Time to Hydrate!") // add .setSmallIcon(R.drawable.ic_water above this
             .setContentText("Don't forget to drink some water to stay healthy!")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

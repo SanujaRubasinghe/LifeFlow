@@ -18,32 +18,143 @@
         android:layout_marginStart="20dp"
         android:layout_marginBottom="16dp"/>
 
-<!--    <TextView-->
-<!--        android:id="@+id/tv_title"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Daily Habits"-->
-<!--        android:textSize="24sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:gravity="center"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/tv_greeting"-->
-<!--        android:layout_marginTop="10dp"/>-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/tv_subtitle"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Track your wellness journey"-->
-<!--        android:textSize="16sp"-->
-<!--        android:gravity="center"-->
-<!--        android:textColor="@android:color/darker_gray"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/tv_greeting" />-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_steps"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="12dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/tv_greeting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <!-- Section Header -->
+            <TextView
+                android:id="@+id/tv_steps_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daily Steps"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary_text_color"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Enhanced Circular Progress -->
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress_steps"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                app:trackThickness="12dp"
+                app:indicatorDirectionCircular="clockwise"
+                app:trackColor="@color/progress_track"
+                app:indicatorColor="@color/accent_color"
+                app:indicatorSize="160dp"
+                android:max="100"
+                app:layout_constraintTop_toBottomOf="@id/tv_steps_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <!-- Step Count in Center -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="@id/progress_steps"
+                app:layout_constraintEnd_toEndOf="@id/progress_steps"
+                app:layout_constraintTop_toTopOf="@id/progress_steps"
+                app:layout_constraintBottom_toBottomOf="@id/progress_steps">
+
+                <TextView
+                    android:id="@+id/tv_step_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_text_color"/>
+
+                <TextView
+                    android:id="@+id/tv_steps_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="steps"
+                    android:textSize="14sp"
+                    android:textColor="@color/step_secondary_text_color"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+            <!-- Progress Info -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                app:layout_constraintStart_toEndOf="@id/progress_steps"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/progress_steps"
+                app:layout_constraintBottom_toBottomOf="@id/progress_steps"
+                android:layout_marginStart="24dp">
+
+                <!-- Goal -->
+                <TextView
+                    android:id="@+id/tv_step_goal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Goal: 5,000"
+                    android:textSize="16sp"
+                    android:textColor="@color/secondary_color"
+                    android:textStyle="bold"/>
+
+                <!-- Progress Percentage -->
+                <TextView
+                    android:id="@+id/tv_step_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/accent_color"
+                    android:layout_marginTop="8dp"/>
+
+                <!-- Status -->
+                <TextView
+                    android:id="@+id/tv_step_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Keep going!"
+                    android:textSize="14sp"
+                    android:textColor="@color/step_secondary_text_color"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/daily_habit_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_steps"
+        android:layout_marginVertical="24dp"
+        android:text="Daily Habits"
+        android:textStyle="bold"
+        android:textSize="20sp"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_habits"
@@ -51,10 +162,11 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@id/daily_habit_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_greeting" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/tv_empty_state"

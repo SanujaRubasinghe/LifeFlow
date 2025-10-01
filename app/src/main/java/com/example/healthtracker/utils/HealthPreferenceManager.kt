@@ -2,10 +2,12 @@ package com.example.healthtracker.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.text.format.DateFormat
 import androidx.core.content.edit
 import com.google.gson.Gson
 import com.example.healthtracker.models.*
 import com.google.gson.reflect.TypeToken
+
 
 class HealthPreferenceManager private constructor(context: Context) {
     private val sharedPreferences: SharedPreferences =
@@ -27,6 +29,8 @@ class HealthPreferenceManager private constructor(context: Context) {
 
         private const val KEY_HABITS = "user_habits"
         private const val KEY_MOOD_ENTRIES = "mood_entries"
+
+        private const val KEY_STEP_ENTRIES = "step_entries"
         private const val KEY_HYDRATION_INTERVAL = "hydration_interval"
         private const val  KEY_HYDRATION_ENABLED = "hydration_enabled"
         private const val KEY_STEP_GOAL = "step_goal"
@@ -186,6 +190,31 @@ class HealthPreferenceManager private constructor(context: Context) {
 
     fun getStepGoal(): Int {
         return sharedPreferences.getInt(KEY_STEP_GOAL, 10000)
+    }
+
+    fun saveStepEntries(entries: List<StepCountEntry>) {
+        val json = gson.toJson(entries)
+        sharedPreferences.edit{putString(KEY_STEP_ENTRIES, json)}
+    }
+
+    fun getStepEntries(): MutableList<StepCountEntry> {
+        val json = sharedPreferences.getString(KEY_STEP_ENTRIES, null) ?: return mutableListOf()
+        val type = object : TypeToken<MutableList<StepCountEntry>>() {}.type
+        return gson.fromJson(json, type)
+    }
+
+    fun addStepsForToday(steps: Int) {
+        val date = DateFormat.format("yyyy-MM-dd", System.currentTimeMillis()).toString()
+        val entries = getStepEntries()
+
+        val todayEntry = entries.find { it.date == date }
+        if (todayEntry != null) {
+            todayEntry.stepCount += steps
+        } else {
+            entries.add(StepCountEntry(date = date, stepCount = steps))
+        }
+
+        saveStepEntries(entries)
     }
 
     // Notifications settings

@@ -21,6 +21,12 @@
     <color name="progress_color">#4CAF50</color>
     <color name="habit_card_border">#E0E0E0</color>
 
+    <!-- step count section -->
+    <color name="progress_track">#E0E0E0</color>
+    <color name="step_secondary_text_color">#757575</color>
+    <color name="step_color_primary">#3F51B5</color>
+    <color name="step_color_primary_dark">#303F9F</color>
+
     <!-- Primary Colors -->
     <color name="primary_dark">#1976D2</color>
     <color name="primary_light">#BBDEFB</color>

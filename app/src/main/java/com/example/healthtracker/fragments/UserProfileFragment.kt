@@ -15,21 +15,30 @@ import com.example.healthtracker.R
 import com.example.healthtracker.activities.LoginActivity
 import com.example.healthtracker.services.HydrationReminderWorker
 import com.example.healthtracker.utils.HealthPreferenceManager
+import com.example.healthtracker.utils.NotificationHelper
+import com.google.android.material.button.MaterialButton
 import java.util.concurrent.TimeUnit
 
 class UserProfileFragment : Fragment() {
 
     private lateinit var sharedPrefsManager: HealthPreferenceManager
+    private lateinit var notificationHelper: NotificationHelper
     private lateinit var settingsButton: Button
+    private lateinit var tvUserName: TextView
+    private lateinit var tvEmail: TextView
+    private lateinit var tvMemberSince: TextView
     private lateinit var tvCurrentStreak: TextView
 
     private lateinit var logoutBtn: Button
+
+    private lateinit var demoNotificationBtn: MaterialButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         sharedPrefsManager = HealthPreferenceManager.getInstance(requireContext())
+        notificationHelper = NotificationHelper(requireContext())
     }
 
     override fun onCreateView(
@@ -44,6 +53,7 @@ class UserProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupUi(view)
+        setupUserInfo()
         setupStats()
         setupListeners()
     }
@@ -52,6 +62,18 @@ class UserProfileFragment : Fragment() {
         settingsButton = view.findViewById(R.id.settings_button)
         tvCurrentStreak = view.findViewById(R.id.current_streak_value)
         logoutBtn = view.findViewById(R.id.logout_button)
+        demoNotificationBtn = view.findViewById(R.id.demo_notification_button)
+
+        tvUserName = view.findViewById(R.id.user_name)
+        tvEmail = view.findViewById(R.id.user_email)
+        tvMemberSince = view.findViewById(R.id.member_since_value)
+    }
+
+    private fun setupUserInfo() {
+        val user = sharedPrefsManager.getUserProfile()
+
+        tvUserName.text = "${user?.name}"
+        tvEmail.text = "${user?.email}"
     }
 
     private fun setupStats() {
@@ -71,6 +93,10 @@ class UserProfileFragment : Fragment() {
             sharedPrefsManager.setUserLoggedIn(false)
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
+        }
+
+        demoNotificationBtn.setOnClickListener {
+            notificationHelper.showHydrationReminder()
         }
     }
 

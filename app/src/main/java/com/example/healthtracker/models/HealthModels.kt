@@ -92,3 +92,14 @@ data class MoodEntry(
         }
     }
 }
+
+data class StepCountEntry(
+    @SerializedName("id")
+    val id: String = UUID.randomUUID().toString(),
+
+    @SerializedName("date")
+    var date: String,
+
+    @SerializedName("stepCount")
+    var stepCount: Int = 0,
+)

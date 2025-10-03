@@ -137,6 +137,8 @@ class HabitTrackerFragment : Fragment() {
             val index = allHabits.indexOfFirst { it.id == updatedHabit.id }
             if (index != -1) {
                 allHabits[index] = updatedHabit
+            } else {
+                allHabits.add(updatedHabit)
             }
         }
         sharedPrefsManager.saveHabits(allHabits)
@@ -169,6 +171,7 @@ class HabitTrackerFragment : Fragment() {
                         targetCount = target,
                         unit = unit
                     )
+                    newHabit.isActive = true
                     habits.add(newHabit)
                     saveHabits()
                     habitAdapter.notifyItemInserted(habits.size - 1)

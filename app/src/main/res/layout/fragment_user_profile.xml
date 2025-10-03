@@ -113,7 +113,7 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/total_workouts_value"
+                    android:id="@+id/tv_avg_mood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -124,7 +124,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Workouts"
+                    android:text="Mood"
                     android:textSize="12sp"
                     android:textColor="@color/sub_title_text_color"
                     android:layout_marginTop="4dp" />

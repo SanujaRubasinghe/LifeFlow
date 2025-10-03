@@ -17,6 +17,9 @@ import com.example.healthtracker.services.HydrationReminderWorker
 import com.example.healthtracker.utils.HealthPreferenceManager
 import com.example.healthtracker.utils.NotificationHelper
 import com.google.android.material.button.MaterialButton
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class UserProfileFragment : Fragment() {
@@ -27,6 +30,7 @@ class UserProfileFragment : Fragment() {
     private lateinit var tvUserName: TextView
     private lateinit var tvEmail: TextView
     private lateinit var tvMemberSince: TextView
+    private lateinit var tvAvgMood: TextView
     private lateinit var tvCurrentStreak: TextView
     private lateinit var tvGoalCount: TextView
 
@@ -69,13 +73,36 @@ class UserProfileFragment : Fragment() {
         tvUserName = view.findViewById(R.id.user_name)
         tvEmail = view.findViewById(R.id.user_email)
         tvMemberSince = view.findViewById(R.id.member_since_value)
+        tvAvgMood = view.findViewById(R.id.tv_avg_mood)
     }
 
     private fun setupUserInfo() {
         val user = sharedPrefsManager.getUserProfile()
+        val moodEntries = sharedPrefsManager.getMoodEntries()
+
+        val last7Days = moodEntries.filter {
+            val entryDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(it.date)
+            val weekAgo = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -7) }.time
+            entryDate != null && entryDate.after(weekAgo)
+        }
+
+        if (last7Days.isNotEmpty()) {
+            val averageMood = last7Days.map { it.mood }.average()
+            val mostCommonEmoji = last7Days.groupBy { it.emoji }
+                .maxByOrNull { it.value.size }?.key ?: "😐"
+
+            tvAvgMood.text = mostCommonEmoji
+        } else {
+            tvAvgMood.text = "No mood data"
+        }
+
+
 
         tvUserName.text = "${user?.name}"
         tvEmail.text = "${user?.email}"
+        tvMemberSince.text = sharedPrefsManager.getFirstLoginDate()
+
+
     }
 
     private fun setupStats() {

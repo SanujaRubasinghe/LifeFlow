@@ -21,10 +21,14 @@ import com.example.healthtracker.models.MoodEntry
 import com.example.healthtracker.utils.GreetingHelper
 import com.example.healthtracker.utils.HealthPreferenceManager
 import com.example.healthtracker.utils.SensorHelper
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class MoodJournalFragment : Fragment() {
 
     private lateinit var tvTotalEntries: TextView
+    private lateinit var tvAvgMood: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var moodAdapter: MoodAdapter
     private lateinit var fabAdd: FloatingActionButton
@@ -52,13 +56,14 @@ class MoodJournalFragment : Fragment() {
 
         setupUI(view)
         loadMoodEntries()
-//        setupSensors()
+        setupSensors()
     }
 
     private fun setupUI(view: View) {
         recyclerView = view.findViewById(R.id.recycler_view_moods)
         fabAdd = view.findViewById(R.id.fab_add_mood)
         tvTotalEntries = view.findViewById(R.id.tv_total_entries)
+        tvAvgMood = view.findViewById(R.id.tv_avg_mood)
 
         moodAdapter = MoodAdapter(
             moodEntries = moodEntries,
@@ -77,9 +82,26 @@ class MoodJournalFragment : Fragment() {
     }
 
     private fun setupSensors() {
-        // Setup shake detection for quick mood logging
         sensorHelper.startShakeDetection {
             showQuickMoodDialog()
+        }
+    }
+
+    private fun setAverageMood() {
+        val last7Days = moodEntries.filter {
+            val entryDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(it.date)
+            val weekAgo = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -7) }.time
+            entryDate != null && entryDate.after(weekAgo)
+        }
+
+        if (last7Days.isNotEmpty()) {
+            val averageMood = last7Days.map { it.mood }.average()
+            val mostCommonEmoji = last7Days.groupBy { it.emoji }
+                .maxByOrNull { it.value.size }?.key ?: "😐"
+
+            tvAvgMood.text = mostCommonEmoji
+        } else {
+            tvAvgMood.text = "No mood data"
         }
     }
 
@@ -87,11 +109,15 @@ class MoodJournalFragment : Fragment() {
         moodEntries.clear()
         moodEntries.addAll(sharedPrefsManager.getMoodEntries().sortedByDescending { it.timestamp })
         tvTotalEntries.text = "${moodEntries.size}"
+
+        setAverageMood()
+
         moodAdapter.notifyDataSetChanged()
     }
 
     private fun saveMoodEntries() {
         sharedPrefsManager.saveMoodEntries(moodEntries)
+        setAverageMood()
     }
 
     private fun showAddMoodDialog() {
@@ -245,6 +271,7 @@ class MoodJournalFragment : Fragment() {
                 saveMoodEntries()
                 moodAdapter.notifyItemRemoved(position)
                 tvTotalEntries.text = "${moodEntries.size}"
+                setAverageMood()
                 Toast.makeText(requireContext(), "Mood entry deleted", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Cancel", null)

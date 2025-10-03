@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="400dp"
+    android:height="800dp"
+    android:viewportWidth="400"
+    android:viewportHeight="800">
+
+    <!-- Background color -->
+    <path
+        android:fillColor="#F8FBFF"
+        android:pathData="M0,0h400v800h-400z"/>
+
+    <!-- Pattern of repeating health and fitness icons -->
+
+    <!-- Heart icons -->
+    <path
+        android:fillColor="#FF5252"
+        android:fillAlpha="0.08"
+        android:pathData="M50,60 C40,50 25,52 25,65 C25,80 50,100 50,100 C50,100 75,80 75,65 C75,52 60,50 50,60 Z"/>
+    <path
+        android:fillColor="#FF5252"
+        android:fillAlpha="0.08"
+        android:pathData="M250,160 C240,150 225,152 225,165 C225,180 250,200 250,200 C250,200 275,180 275,165 C275,152 260,150 250,160 Z"/>
+    <path
+        android:fillColor="#FF5252"
+        android:fillAlpha="0.08"
+        android:pathData="M150,460 C140,450 125,452 125,465 C125,480 150,500 150,500 C150,500 175,480 175,465 C175,452 160,450 150,460 Z"/>
+    <path
+        android:fillColor="#FF5252"
+        android:fillAlpha="0.08"
+        android:pathData="M350,560 C340,550 325,552 325,565 C325,580 350,600 350,600 C350,600 375,580 375,565 C375,552 360,550 350,560 Z"/>
+
+    <!-- Water bottle icons -->
+    <path
+        android:fillColor="#2196F3"
+        android:fillAlpha="0.08"
+        android:pathData="M300,60h20v40h-20z M295,60h30v-5h-30z M295,100h30v5h-30z"/>
+    <path
+        android:fillColor="#2196F3"
+        android:fillAlpha="0.08"
+        android:pathData="M100,260h20v40h-20z M95,260h30v-5h-30z M95,300h30v5h-30z"/>
+    <path
+        android:fillColor="#2196F3"
+        android:fillAlpha="0.08"
+        android:pathData="M200,560h20v40h-20z M195,560h30v-5h-30z M195,600h30v5h-30z"/>
+
+    <!-- Dumbbell icons -->
+    <path
+        android:fillColor="#FF9800"
+        android:fillAlpha="0.08"
+        android:pathData="M60,180h60v10h-60z M50,180h10v30h-10z M120,180h10v30h-10z"/>
+    <path
+        android:fillColor="#FF9800"
+        android:fillAlpha="0.08"
+        android:pathData="M260,380h60v10h-60z M250,380h10v30h-10z M320,380h10v30h-10z"/>
+    <path
+        android:fillColor="#FF9800"
+        android:fillAlpha="0.08"
+        android:pathData="M160,680h60v10h-60z M150,680h10v30h-10z M220,680h10v30h-10z"/>
+
+    <!-- Running figure icons -->
+    <path
+        android:fillColor="#4CAF50"
+        android:fillAlpha="0.08"
+        android:pathData="M320,120c8,-4 20,0 24,8c4,8 0,20 -8,24c-8,4 -20,0 -24,-8C308,136 312,124 320,120Z M336,108c4,0 8,4 8,8c0,4 -4,8 -8,8c-4,0 -8,-4 -8,-8C328,112 332,108 336,108Z"/>
+    <path
+        android:fillColor="#4CAF50"
+        android:fillAlpha="0.08"
+        android:pathData="M120,320c8,-4 20,0 24,8c4,8 0,20 -8,24c-8,4 -20,0 -24,-8C112,336 116,324 120,320Z M136,308c4,0 8,4 8,8c0,4 -4,8 -8,8c-4,0 -8,-4 -8,-8C128,312 132,308 136,308Z"/>
+    <path
+        android:fillColor="#4CAF50"
+        android:fillAlpha="0.08"
+        android:pathData="M280,520c8,-4 20,0 24,8c4,8 0,20 -8,24c-8,4 -20,0 -24,-8C272,536 276,524 280,520Z M296,508c4,0 8,4 8,8c0,4 -4,8 -8,8c-4,0 -8,-4 -8,-8C288,512 292,508 296,508Z"/>
+
+    <!-- Plus/Medicine icons -->
+    <path
+        android:fillColor="#9C27B0"
+        android:fillAlpha="0.08"
+        android:pathData="M40,380h30v30h-30z M55,365v40 M35,395h40"/>
+    <path
+        android:fillColor="#9C27B0"
+        android:fillAlpha="0.08"
+        android:pathData="M240,580h30v30h-30z M255,565v40 M235,595h40"/>
+    <path
+        android:fillColor="#9C27B0"
+        android:fillAlpha="0.08"
+        android:pathData="M140,220h30v30h-30z M155,205v40 M135,235h40"/>
+
+    <!-- Footstep icons -->
+    <path
+        android:fillColor="#795548"
+        android:fillAlpha="0.08"
+        android:pathData="M180,120c0,10 -8,18 -18,18c-10,0 -18,-8 -18,-18c0,-10 8,-18 18,-18C172,102 180,110 180,120Z M200,140c0,8 -6,14 -14,14c-8,0 -14,-6 -14,-14c0,-8 6,-14 14,-14C194,126 200,132 200,140Z"/>
+    <path
+        android:fillColor="#795548"
+        android:fillAlpha="0.08"
+        android:pathData="M340,460c0,10 -8,18 -18,18c-10,0 -18,-8 -18,-18c0,-10 8,-18 18,-18C332,442 340,450 340,460Z M360,480c0,8 -6,14 -14,14c-8,0 -14,-6 -14,-14c0,-8 6,-14 14,-14C354,466 360,472 360,480Z"/>
+    <path
+        android:fillColor="#795548"
+        android:fillAlpha="0.08"
+        android:pathData="M80,620c0,10 -8,18 -18,18c-10,0 -18,-8 -18,-18c0,-10 8,-18 18,-18C72,602 80,610 80,620Z M100,640c0,8 -6,14 -14,14c-8,0 -14,-6 -14,-14c0,-8 6,-14 14,-14C94,626 100,632 100,640Z"/>
+</vector>

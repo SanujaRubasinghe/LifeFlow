@@ -73,7 +73,7 @@ class HabitTrackerFragment : Fragment() {
 
         setupUI(view)
         loadHabits()
-//        setupSensors()
+        setupSensors()
     }
 
     private fun setupUI(view: View) {

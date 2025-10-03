@@ -70,9 +70,9 @@ class HealthPreferenceManager private constructor(context: Context) {
         sharedPreferences.edit {putString(KEY_FIRST_LOGIN_DATE, date)}
     }
 
-    fun getFirstLoginDate(): Long {
-        val today = System.currentTimeMillis()
-        return sharedPreferences.getLong(KEY_FIRST_LOGIN_DATE, today)
+    fun getFirstLoginDate(): String? {
+        val today = getTodayDate()
+        return sharedPreferences.getString(KEY_FIRST_LOGIN_DATE, today)
     }
 
     fun setLastLoginDate() {
@@ -86,9 +86,9 @@ class HealthPreferenceManager private constructor(context: Context) {
         }
     }
 
-    fun getLastLoginDate(): Long {
-        val today = System.currentTimeMillis()
-        return sharedPreferences.getLong(KEY_LAST_LOGIN_DATE, today)
+    fun getLastLoginDate(): String? {
+        val today = getTodayDate()
+        return sharedPreferences.getString(KEY_LAST_LOGIN_DATE, today)
     }
 
     private fun getTodayDate(): String {

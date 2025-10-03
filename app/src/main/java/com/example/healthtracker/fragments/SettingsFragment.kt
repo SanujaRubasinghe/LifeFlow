@@ -23,6 +23,7 @@ class SettingsFragment : Fragment() {
     private lateinit var etStepGoal: EditText
     private lateinit var btnSave: Button
     private lateinit var btnReset: Button
+    private lateinit var btnBack: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +54,7 @@ class SettingsFragment : Fragment() {
         etStepGoal = view.findViewById(R.id.et_step_goal)
         btnSave = view.findViewById(R.id.btn_save)
         btnReset = view.findViewById(R.id.btn_reset)
+        btnBack = view.findViewById(R.id.btn_back)
 
         // Setup spinner for hydration intervals
         val intervals = arrayOf("1 hour", "2 hours", "3 hours", "4 hours", "6 hours", "8 hours")
@@ -94,6 +96,14 @@ class SettingsFragment : Fragment() {
 
         switchHydrationReminders.setOnCheckedChangeListener { _, isChecked ->
             spinnerHydrationInterval.isEnabled = isChecked
+        }
+
+        btnBack.setOnClickListener {
+            val userProfileFragment = UserProfileFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, userProfileFragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
 

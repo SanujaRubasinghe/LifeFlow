@@ -46,7 +46,7 @@ class MoodJournalFragment : Fragment() {
 
         setupUI(view)
         loadMoodEntries()
-        setupSensors()
+//        setupSensors()
     }
 
     private fun setupUI(view: View) {

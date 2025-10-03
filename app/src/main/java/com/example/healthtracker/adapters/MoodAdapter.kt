@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.healthtracker.R
 import com.example.healthtracker.models.MoodEntry
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,6 +19,7 @@ class MoodAdapter(
 ) : RecyclerView.Adapter<MoodAdapter.MoodViewHolder>() {
 
     class MoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvTotalEntries: TextView = itemView.findViewById(R.id.tv_total_entries)
         val tvEmoji: TextView = itemView.findViewById(R.id.tv_emoji)
         val tvMoodLabel: TextView = itemView.findViewById(R.id.tv_mood_label)
         val tvNote: TextView = itemView.findViewById(R.id.tv_note)
@@ -33,7 +35,12 @@ class MoodAdapter(
     override fun onBindViewHolder(holder: MoodViewHolder, position: Int) {
         val moodEntry = moodEntries[position]
         val moodLabels = MoodEntry.getMoodLabels()
+        val totalEntries = moodEntries.filter {
+            val entryDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(it.date)
+            entryDate != null
+        }
 
+        holder.tvTotalEntries.text = "${totalEntries.size}"
         holder.tvEmoji.text = moodEntry.emoji
         holder.tvMoodLabel.text = moodLabels[moodEntry.mood - 1]
         holder.tvNote.text = if (moodEntry.note.isNotEmpty()) moodEntry.note else "No notes"

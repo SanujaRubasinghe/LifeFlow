@@ -7,8 +7,10 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.healthtracker.R
 import com.example.healthtracker.models.Habit
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.floor
 
 class HabitAdapter(
     private val habits: MutableList<Habit>,
@@ -24,6 +26,7 @@ class HabitAdapter(
         val tvHabitDescription: TextView = itemView.findViewById(R.id.tv_habit_description)
         val tvProgress: TextView = itemView.findViewById(R.id.tv_progress)
         val progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
+        val tvPercentage: TextView = itemView.findViewById(R.id.tv_percentage)
         val btnDecrease: Button = itemView.findViewById(R.id.btn_decrease)
         val btnIncrease: Button = itemView.findViewById(R.id.btn_increase)
         val btnDelete: ImageButton = itemView.findViewById(R.id.btn_delete)
@@ -45,6 +48,7 @@ class HabitAdapter(
         holder.tvHabitDescription.text = habit.description
         holder.tvProgress.text = "$currentProgress / ${habit.targetCount} ${habit.unit}"
         holder.progressBar.progress = progressPercentage.toInt()
+        holder.tvPercentage.text = "${floor( progressPercentage)}%"
 
         // Set completion status icon
         if (isCompleted) {

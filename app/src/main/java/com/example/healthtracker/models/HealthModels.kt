@@ -33,7 +33,7 @@ data class Habit(
     }
 
     fun isCompletedForDate(date: String): Boolean {
-        return getCompletionForDate(date) == targetCount
+        return getCompletionForDate(date) >= targetCount
     }
 
     fun addCompletion(date: String, count: Int = 1) {
@@ -61,7 +61,7 @@ data class MoodEntry(
     val id: String = UUID.randomUUID().toString(),
 
     @SerializedName("mood")
-    var mood: Int, // 1-5 scale
+    var mood: Int,
 
     @SerializedName("emoji")
     var emoji: String,
@@ -73,7 +73,7 @@ data class MoodEntry(
     val timestamp: Long = System.currentTimeMillis(),
 
     @SerializedName("date")
-    val date: String // YYYY-MM-DD format
+    val date: String
 ) {
     companion object {
         const val MOOD_VERY_SAD = 1
@@ -88,6 +88,24 @@ data class MoodEntry(
 
         fun getMoodLabels(): List<String> {
             return listOf("Very Sad", "Sad", "Neutral", "Happy", "Very Happy")
+        }
+
+        fun getEntriesPerDay(entries: List<MoodEntry>): Map<String, Int> {
+            return entries.groupingBy { it.date }.eachCount()
+        }
+
+        fun getMostCommonMoodPerDay(entries: List<MoodEntry>): Map<String, Int> {
+            return entries.groupBy { it.date }.mapValues { (_, dailyEntries) ->
+                dailyEntries.groupingBy { it.mood }
+                    .eachCount()
+                    .maxByOrNull { it.value }?.key ?: MOOD_NEUTRAL
+            }
+        }
+
+        fun getOverallMostCommonMood(entries: List<MoodEntry>): Int {
+            return entries.groupingBy { it.mood }
+                .eachCount()
+                .maxByOrNull { it.value }?.key ?: MOOD_NEUTRAL
         }
     }
 }

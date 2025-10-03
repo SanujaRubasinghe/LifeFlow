@@ -28,6 +28,7 @@ class UserProfileFragment : Fragment() {
     private lateinit var tvEmail: TextView
     private lateinit var tvMemberSince: TextView
     private lateinit var tvCurrentStreak: TextView
+    private lateinit var tvGoalCount: TextView
 
     private lateinit var logoutBtn: Button
 
@@ -61,6 +62,7 @@ class UserProfileFragment : Fragment() {
     private fun setupUi(view: View) {
         settingsButton = view.findViewById(R.id.settings_button)
         tvCurrentStreak = view.findViewById(R.id.current_streak_value)
+        tvGoalCount = view.findViewById(R.id.goals_achieved_value)
         logoutBtn = view.findViewById(R.id.logout_button)
         demoNotificationBtn = view.findViewById(R.id.demo_notification_button)
 
@@ -78,6 +80,7 @@ class UserProfileFragment : Fragment() {
 
     private fun setupStats() {
         tvCurrentStreak.text = "${sharedPrefsManager.getStreakCount()} days"
+        tvGoalCount.text = "${sharedPrefsManager.getHabits().filter { it.isActive }.size}"
     }
 
     private fun setupListeners() {

@@ -3,8 +3,10 @@ package com.example.healthtracker.widgets
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.widget.RemoteViews
 import com.example.healthtracker.R
 import com.example.healthtracker.activities.MainActivity
@@ -59,38 +61,44 @@ class HabitWidgetProvider : AppWidgetProvider() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
-            // Construct the RemoteViews object
             val views = RemoteViews(context.packageName, R.layout.widget_habit).apply {
-                // Set texts
                 setTextViewText(R.id.tv_widget_title, "Daily Habits")
                 setTextViewText(R.id.tv_widget_progress, "$totalProgress%")
                 setTextViewText(R.id.tv_widget_completed, "$completedHabits/${habits.size} completed")
                 setTextViewText(R.id.tv_widget_updated, "Updated: $currentTime")
 
-                // Set progress bar
-                setProgressBar(R.id.progress_bar_widget, 100, totalProgress, false)
-
-                // Set colors based on progress
                 val progressColor = when {
-                    totalProgress >= 80 -> android.graphics.Color.GREEN
-                    totalProgress >= 50 -> android.graphics.Color.YELLOW
-                    else -> android.graphics.Color.RED
+                    totalProgress >= 80 -> "#4CAF50"  // Green
+                    totalProgress >= 50 -> "#FF9800"  // Orange
+                    else -> "#F44336"                 // Red
                 }
 
-                // Set background color based on completion status
+                setInt(R.id.progress_bar_widget, "setColorFilter", Color.parseColor(progressColor))
+
                 val backgroundColor = when {
-                    completedHabits == habits.size && habits.isNotEmpty() -> android.graphics.Color.parseColor("#E8F5E8")
-                    totalProgress > 0 -> android.graphics.Color.parseColor("#FFF3E0")
-                    else -> android.graphics.Color.parseColor("#FFEBEE")
+                    completedHabits == habits.size && habits.isNotEmpty() -> "#E8F5E9"  // Light Green
+                    totalProgress > 0 -> "#FFF3E0"  // Light Orange
+                    else -> "#FFEBEE"               // Light Red
                 }
-                setInt(R.id.widget_container, "setBackgroundColor", backgroundColor)
+                setInt(R.id.widget_container, "setBackgroundResource", R.drawable.widget_background)
 
-                // Set click intent
+                setInt(R.id.widget_container, "setBackgroundColor", Color.parseColor(backgroundColor))
+
                 setOnClickPendingIntent(R.id.widget_container, pendingIntent)
             }
 
-            // Update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
+
+        fun updateHabitWidget(context: Context) {
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val componentName = ComponentName(context, HabitWidgetProvider::class.java)
+            val appWidgetIds = appWidgetManager.getAppWidgetIds(componentName)
+
+            for (appWidgetId in appWidgetIds) {
+                updateAppWidget(context, appWidgetManager, appWidgetId)
+            }
+        }
+
     }
 }

@@ -1,67 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Place this in res/layout/widget_habit.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/widget_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/widget_background"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="16dp"
+    android:gravity="center">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/tv_widget_title"
+    <!-- Header with Icon -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Daily Habits"
-        android:textColor="#333333"
-        android:textSize="14sp"
-        android:textStyle="bold"
+        android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="12dp">
 
-    <!-- Progress Percentage -->
-    <TextView
-        android:id="@+id/tv_widget_progress"
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_habits"
+            app:tint="#4DB6AC"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/tv_widget_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily Habits"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.02"
+            android:fontFamily="sans-serif-medium" />
+
+    </LinearLayout>
+
+    <!-- Circular Progress with Percentage -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="12dp">
+
+
+
+        <!-- Circular Progress -->
+        <ImageView
+            android:id="@+id/progress_bar_widget"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/widget_circle_progress"
+            app:tint="#4DB6AC" />
+
+        <!-- Progress Percentage -->
+        <TextView
+            android:id="@+id/tv_widget_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0%"
+            android:textColor="#212121"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+    <!-- Completion Status with Icon -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="0%"
-        android:textColor="#666666"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="8dp">
 
-    <!-- Progress Bar -->
-    <ProgressBar
-        android:id="@+id/progress_bar_widget"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:layout_marginBottom="4dp"
-        android:max="100"
-        android:progress="0"
-        android:progressTint="#4CAF50" />
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_check_circle"
+            app:tint="#4CAF50"
+            android:layout_marginEnd="4dp" />
 
-    <!-- Completion Status -->
-    <TextView
-        android:id="@+id/tv_widget_completed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="0/0 completed"
-        android:textColor="#666666"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:layout_marginBottom="2dp" />
+        <TextView
+            android:id="@+id/tv_widget_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/0 completed"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif" />
 
-    <!-- Last Updated -->
-    <TextView
-        android:id="@+id/tv_widget_updated"
+    </LinearLayout>
+
+    <!-- Last Updated with Refresh Icon -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Updated: --:--"
-        android:textColor="#999999"
-        android:textSize="10sp"
-        android:gravity="center" />
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/ic_update"
+            android:tint="#999999"
+            android:layout_marginEnd="4dp" />
+
+        <TextView
+            android:id="@+id/tv_widget_updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Updated: --:--"
+            android:textColor="#999999"
+            android:textSize="10sp"
+            android:fontFamily="sans-serif" />
+
+    </LinearLayout>
 
 </LinearLayout>

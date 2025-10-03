@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.floor
 import androidx.core.graphics.toColorInt
+import com.example.healthtracker.widgets.HabitWidgetProvider
 
 class HabitAdapter(
     private val habits: MutableList<Habit>,
@@ -44,26 +45,12 @@ class HabitAdapter(
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
 
         val habitCardColors = listOf(
-            "#3F8FFE".toColorInt(),  // blue
-            "#9465FF".toColorInt(),  // purple
-            "#FF6B81".toColorInt(),  // pink
-            "#4BD1A0".toColorInt(),  // teal
-            "#FF9AD3".toColorInt(),  // light pink
-            "#6CCFFF".toColorInt(),  // light blue
-            "#B084FF".toColorInt(),  // violet
-            "#FF7F7F".toColorInt(),  // coral-red
-            "#63FFB3".toColorInt(),  // mint green
-            "#66FFF0".toColorInt(),  // aqua
-            "#9AE6FF".toColorInt(),  // sky blue
-            "#FF8FC4".toColorInt(),  // bubblegum pink
-            "#AB83FF".toColorInt(),  // lavender
-            "#FFB3B3".toColorInt(),  // pastel red
-            "#00D9A6".toColorInt(),  // emerald green
-            "#7DFFB2".toColorInt(),  // fresh lime green
-            "#5BE7FF".toColorInt(),  // cyan
-            "#E89DFF".toColorInt(),  // bright lilac
-            "#FF97E0".toColorInt(),  // candy pink
-            "#7FA7FF".toColorInt()   // periwinkle blue
+            "#FFECB3".toColorInt(),
+            "#E8F5E9".toColorInt(),
+            "#E3F2FD".toColorInt(),
+            "#F3E5F5".toColorInt(),
+            "#FFF9C4".toColorInt(),
+            "#FFE8E0".toColorInt(),
         )
 
         val habit = habits[position]
@@ -97,15 +84,18 @@ class HabitAdapter(
         holder.btnIncrease.setOnClickListener {
             val newProgress = currentProgress + 1
             onProgressChange(habit, newProgress)
+            HabitWidgetProvider.updateHabitWidget(holder.itemView.context)
         }
 
         holder.btnDecrease.setOnClickListener {
             val newProgress = maxOf(0, currentProgress - 1)
             onProgressChange(habit, newProgress)
+            HabitWidgetProvider.updateHabitWidget(holder.itemView.context)
         }
 
         holder.btnDelete.setOnClickListener {
             onDeleteClick(habit)
+            HabitWidgetProvider.updateHabitWidget(holder.itemView.context)
         }
 
         holder.progressBar.setOnClickListener {

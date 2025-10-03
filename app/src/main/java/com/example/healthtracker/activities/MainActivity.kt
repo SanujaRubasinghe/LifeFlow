@@ -139,27 +139,49 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+//    private fun setupHydrationReminders() {
+//        if (sharedPrefsManager.isHydrationEnabled()) {
+//            val intervalHours = sharedPrefsManager.getHydrationInterval().toLong()
+//
+//            val constraints = Constraints.Builder()
+//                .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+//                .build()
+//
+//            val hydrationWork = PeriodicWorkRequestBuilder<HydrationReminderWorker>(
+//                intervalHours, TimeUnit.HOURS
+//            )
+//                .setConstraints(constraints)
+//                .addTag("hydration_reminder")
+//                .build()
+//
+//            WorkManager.getInstance(this)
+//                .enqueueUniquePeriodicWork(
+//                    "hydration_reminder",
+//                    ExistingPeriodicWorkPolicy.REPLACE,
+//                    hydrationWork
+//                )
+//        }
+//    }
+
     private fun setupHydrationReminders() {
         if (sharedPrefsManager.isHydrationEnabled()) {
-            val intervalHours = sharedPrefsManager.getHydrationInterval().toLong()
+            val intervalMinutes = sharedPrefsManager.getHydrationInterval().toLong()
 
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
                 .build()
 
-            val hydrationWork = PeriodicWorkRequestBuilder<HydrationReminderWorker>(
-                intervalHours, TimeUnit.HOURS
-            )
+            val hydrationWork = OneTimeWorkRequestBuilder<HydrationReminderWorker>()
+                .setInitialDelay(intervalMinutes, TimeUnit.MINUTES)
                 .setConstraints(constraints)
                 .addTag("hydration_reminder")
                 .build()
 
-            WorkManager.getInstance(this)
-                .enqueueUniquePeriodicWork(
-                    "hydration_reminder",
-                    ExistingPeriodicWorkPolicy.REPLACE,
-                    hydrationWork
-                )
+            WorkManager.getInstance(this).enqueueUniqueWork(
+                "hydration_reminder",
+                ExistingWorkPolicy.REPLACE,
+                hydrationWork
+            )
         }
     }
 

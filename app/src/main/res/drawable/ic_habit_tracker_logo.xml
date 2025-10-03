@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Main Circle Background -->
+    <path
+        android:pathData="M60,10A50,50 0,1 1,10 60A50,50 0,1 1,60 10z"
+        android:fillColor="#4DB6AC"
+        android:strokeColor="#4DB6AC"
+        android:strokeWidth="1"/>
+
+    <!-- Calendar Base -->
+    <path
+        android:pathData="M30,35 L90,35 L90,85 L30,85 Z"
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1"/>
+
+    <!-- Calendar Header -->
+    <path
+        android:pathData="M30,35 L90,35 L90,45 L30,45 Z"
+        android:fillColor="#FF8A65"
+        android:strokeColor="#FF8A65"
+        android:strokeWidth="1"/>
+
+    <!-- Date Numbers -->
+    <!-- Row 1 -->
+    <path
+        android:pathData="M35,55 L45,55 L45,65 L35,65 Z"
+        android:fillColor="#81C784"
+        android:strokeColor="#81C784"
+        android:strokeWidth="1"/>
+    <path
+        android:pathData="M50,55 L60,55 L60,65 L50,65 Z"
+        android:fillColor="#E8F5E8"
+        android:strokeColor="#81C784"
+        android:strokeWidth="1"/>
+    <path
+        android:pathData="M65,55 L75,55 L75,65 L65,65 Z"
+        android:fillColor="#E8F5E8"
+        android:strokeColor="#81C784"
+        android:strokeWidth="1"/>
+
+    <!-- Row 2 -->
+    <path
+        android:pathData="M35,70 L45,70 L45,80 L35,80 Z"
+        android:fillColor="#E8F5E8"
+        android:strokeColor="#81C784"
+        android:strokeWidth="1"/>
+    <path
+        android:pathData="M50,70 L60,70 L60,80 L50,80 Z"
+        android:fillColor="#81C784"
+        android:strokeColor="#81C784"
+        android:strokeWidth="1"/>
+    <path
+        android:pathData="M65,70 L75,70 L75,80 L65,80 Z"
+        android:fillColor="#E8F5E8"
+        android:strokeColor="#81C784"
+        android:strokeWidth="1"/>
+
+    <!-- Checkmark on first habit -->
+    <path
+        android:pathData="M38,58 L42,62 L48,56"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="round"/>
+
+    <!-- Flame for current streak -->
+    <path
+        android:pathData="M53,73 Q55,70 57,73 Q59,76 57,78 Q55,80 53,78 Q51,76 53,73 Z"
+        android:fillColor="#FF8A65"
+        android:strokeColor="#FF8A65"
+        android:strokeWidth="1"/>
+
+    <!-- Progress line connecting habits -->
+    <path
+        android:pathData="M45,62 L50,62"
+        android:strokeColor="#4DB6AC"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="round"/>
+
+    <path
+        android:pathData="M60,62 L65,62"
+        android:strokeColor="#4DB6AC"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="round"/>
+
+    <path
+        android:pathData="M45,77 L50,77"
+        android:strokeColor="#4DB6AC"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="round"/>
+
+    <path
+        android:pathData="M60,77 L65,77"
+        android:strokeColor="#4DB6AC"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeLineCap="round"/>
+
+</vector>

@@ -28,6 +28,7 @@ data class Habit(
     @SerializedName("completions")
     var completions: MutableMap<String, Int> = mutableMapOf()
 ) {
+    var color: Int? = null
     fun getCompletionForDate(date: String): Int {
         return completions[date] ?: 0
     }
@@ -61,7 +62,7 @@ data class MoodEntry(
     val id: String = UUID.randomUUID().toString(),
 
     @SerializedName("mood")
-    var mood: Int,
+    var mood: Int, // 1-5 scale
 
     @SerializedName("emoji")
     var emoji: String,
@@ -73,7 +74,7 @@ data class MoodEntry(
     val timestamp: Long = System.currentTimeMillis(),
 
     @SerializedName("date")
-    val date: String
+    val date: String // YYYY-MM-DD format
 ) {
     companion object {
         const val MOOD_VERY_SAD = 1
@@ -89,23 +90,16 @@ data class MoodEntry(
         fun getMoodLabels(): List<String> {
             return listOf("Very Sad", "Sad", "Neutral", "Happy", "Very Happy")
         }
-
-        fun getEntriesPerDay(entries: List<MoodEntry>): Map<String, Int> {
-            return entries.groupingBy { it.date }.eachCount()
-        }
-
-        fun getMostCommonMoodPerDay(entries: List<MoodEntry>): Map<String, Int> {
-            return entries.groupBy { it.date }.mapValues { (_, dailyEntries) ->
-                dailyEntries.groupingBy { it.mood }
-                    .eachCount()
-                    .maxByOrNull { it.value }?.key ?: MOOD_NEUTRAL
-            }
-        }
-
-        fun getOverallMostCommonMood(entries: List<MoodEntry>): Int {
-            return entries.groupingBy { it.mood }
-                .eachCount()
-                .maxByOrNull { it.value }?.key ?: MOOD_NEUTRAL
-        }
     }
 }
+
+data class StepCountEntry(
+    @SerializedName("id")
+    val id: String = UUID.randomUUID().toString(),
+
+    @SerializedName("date")
+    var date: String,
+
+    @SerializedName("stepCount")
+    var stepCount: Int = 0,
+)

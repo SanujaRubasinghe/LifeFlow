@@ -2,10 +2,12 @@ package com.example.healthtracker.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.text.format.DateFormat
 import androidx.core.content.edit
 import com.google.gson.Gson
 import com.example.healthtracker.models.*
 import com.google.gson.reflect.TypeToken
+
 
 class HealthPreferenceManager private constructor(context: Context) {
     private val sharedPreferences: SharedPreferences =
@@ -19,8 +21,16 @@ class HealthPreferenceManager private constructor(context: Context) {
         private const val KEY_USER_LOGGED_IN = "user_logged_in"
         private const val KEY_USER_PROFILE = "user_profile"
 
+        private const val KEY_FIRST_LOGIN_DATE = "first_login_date"
+
+        private const val KEY_LAST_LOGIN_DATE = "last_login_date"
+
+        private const val KEY_STREAK_COUNTER = "streak_counter"
+
         private const val KEY_HABITS = "user_habits"
         private const val KEY_MOOD_ENTRIES = "mood_entries"
+
+        private const val KEY_STEP_ENTRIES = "step_entries"
         private const val KEY_HYDRATION_INTERVAL = "hydration_interval"
         private const val  KEY_HYDRATION_ENABLED = "hydration_enabled"
         private const val KEY_STEP_GOAL = "step_goal"
@@ -55,11 +65,47 @@ class HealthPreferenceManager private constructor(context: Context) {
         return sharedPreferences.getBoolean(KEY_USER_LOGGED_IN, false)
     }
 
+    fun setFirstLoginDate() {
+        val date = getTodayDate()
+        sharedPreferences.edit {putString(KEY_FIRST_LOGIN_DATE, date)}
+    }
+
+    fun getFirstLoginDate(): Long {
+        val today = System.currentTimeMillis()
+        return sharedPreferences.getLong(KEY_FIRST_LOGIN_DATE, today)
+    }
+
+    fun setLastLoginDate() {
+        val today = getTodayDate()
+        val lastLogin = sharedPreferences.getString(KEY_LAST_LOGIN_DATE, null)
+
+        if (lastLogin == null || lastLogin != today) {
+            sharedPreferences.edit { putString(KEY_LAST_LOGIN_DATE, today) }
+            val streakCount = sharedPreferences.getInt(KEY_STREAK_COUNTER, 0)
+            sharedPreferences.edit{putInt(KEY_STREAK_COUNTER, streakCount + 1)}
+        }
+    }
+
+    fun getLastLoginDate(): Long {
+        val today = System.currentTimeMillis()
+        return sharedPreferences.getLong(KEY_LAST_LOGIN_DATE, today)
+    }
+
+    private fun getTodayDate(): String {
+        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+        return sdf.format(java.util.Date())
+    }
+
+    fun getStreakCount(): Int {
+        return sharedPreferences.getInt(KEY_STREAK_COUNTER, 0)
+    }
+
     data class UserProfile(
         val name: String,
         val age: Int,
-        val weight: Float,
-        val height: Float
+        val email: String,
+        val password: String,
+        val gender: String,
     )
 
     fun saveUserProfile(profile: UserProfile) {
@@ -144,6 +190,31 @@ class HealthPreferenceManager private constructor(context: Context) {
 
     fun getStepGoal(): Int {
         return sharedPreferences.getInt(KEY_STEP_GOAL, 10000)
+    }
+
+    fun saveStepEntries(entries: List<StepCountEntry>) {
+        val json = gson.toJson(entries)
+        sharedPreferences.edit{putString(KEY_STEP_ENTRIES, json)}
+    }
+
+    fun getStepEntries(): MutableList<StepCountEntry> {
+        val json = sharedPreferences.getString(KEY_STEP_ENTRIES, null) ?: return mutableListOf()
+        val type = object : TypeToken<MutableList<StepCountEntry>>() {}.type
+        return gson.fromJson(json, type)
+    }
+
+    fun addStepsForToday(steps: Int) {
+        val date = DateFormat.format("yyyy-MM-dd", System.currentTimeMillis()).toString()
+        val entries = getStepEntries()
+
+        val todayEntry = entries.find { it.date == date }
+        if (todayEntry != null) {
+            todayEntry.stepCount += steps
+        } else {
+            entries.add(StepCountEntry(date = date, stepCount = steps))
+        }
+
+        saveStepEntries(entries)
     }
 
     // Notifications settings

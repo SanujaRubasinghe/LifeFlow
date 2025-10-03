@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.NumberPicker
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,8 +17,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.example.healthtracker.R
 import com.example.healthtracker.adapters.HabitAdapter
 import com.example.healthtracker.models.Habit
+import com.example.healthtracker.utils.GreetingHelper
 import com.example.healthtracker.utils.HealthPreferenceManager
 import com.example.healthtracker.utils.SensorHelper
+import com.google.android.material.progressindicator.CircularProgressIndicator
+import org.w3c.dom.Text
 
 import kotlin.collections.*
 
@@ -28,6 +32,14 @@ class HabitTrackerFragment : Fragment() {
     private lateinit var fabAdd: FloatingActionButton
     private lateinit var sharedPrefsManager: HealthPreferenceManager
     private lateinit var sensorHelper: SensorHelper
+
+    // step counter
+    private lateinit var progressStep: CircularProgressIndicator
+    private lateinit var tvStepCount: TextView
+    private lateinit var tvStepGoal: TextView
+    private lateinit var tvStepStatus: TextView
+
+    private var stepGoal: Int = 10000
 
     private var habits = mutableListOf<Habit>()
     private val currentDate = DateFormat.format("yyyy-MM-dd", System.currentTimeMillis()).toString()
@@ -45,6 +57,19 @@ class HabitTrackerFragment : Fragment() {
 
         sharedPrefsManager = HealthPreferenceManager.Companion.getInstance(requireContext())
         sensorHelper = SensorHelper(requireContext())
+
+        val tvGreeting: TextView = view.findViewById(R.id.tv_greeting)
+        GreetingHelper.setGreeting(requireContext(), tvGreeting, "Habit")
+
+        // step Counter
+        progressStep = view.findViewById(R.id.progress_steps)
+        tvStepCount = view.findViewById(R.id.tv_step_count)
+        tvStepGoal = view.findViewById(R.id.tv_step_goal)
+        tvStepStatus = view.findViewById(R.id.tv_step_status)
+
+        stepGoal = sharedPrefsManager.getStepGoal()
+        progressStep.max = stepGoal
+        tvStepGoal.text = "Goal: $stepGoal"
 
         setupUI(view)
         loadHabits()
@@ -73,9 +98,7 @@ class HabitTrackerFragment : Fragment() {
     }
 
     private fun setupSensors() {
-        // Setup shake detection for quick water habit completion
         sensorHelper.startShakeDetection {
-            // Quick add water habit completion
             val waterHabit = habits.find { it.name.contains("Water", ignoreCase = true) }
             waterHabit?.let { habit ->
                 habit.addCompletion(currentDate, 1)
@@ -83,6 +106,21 @@ class HabitTrackerFragment : Fragment() {
                 habitAdapter.notifyDataSetChanged()
                 Toast.makeText(requireContext(), "💧 Water intake added!", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        sensorHelper.startStepCounting { steps ->
+            updateSteps(steps)
+        }
+    }
+
+    private fun updateSteps(currentSteps: Int) {
+        tvStepCount.text = currentSteps.toString()
+        progressStep.setProgress(currentSteps, true)
+
+        tvStepStatus.text = when {
+            currentSteps >= stepGoal -> "Goal Achieved 🎉"
+            currentSteps > stepGoal / 2 -> "Almost there!"
+            else -> "Keep Going!"
         }
     }
 

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:backgroundTint="@color/card_background"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true">
@@ -26,39 +27,32 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/emoji_background" />
 
-        <!-- Content Section -->
+        <!-- Content Section (Vertical Stack) -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <!-- Mood Label and Timestamp Row -->
-            <LinearLayout
+            <!-- Mood Label -->
+            <TextView
+                android:id="@+id/tv_mood_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:text="Happy"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
 
-                <TextView
-                    android:id="@+id/tv_mood_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Happy"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/tv_timestamp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dec 25, 2023 at 2:30 PM"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/darker_gray" />
-
-            </LinearLayout>
+            <!-- Timestamp -->
+            <TextView
+                android:id="@+id/tv_timestamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dec 25, 2023 at 2:30 PM"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="2dp" />
 
             <!-- Note Section -->
             <TextView
@@ -68,7 +62,7 @@
                 android:text="Feeling great today!"
                 android:textSize="14sp"
                 android:textColor="@android:color/darker_gray"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 android:maxLines="3"
                 android:ellipsize="end"
                 android:visibility="visible" />

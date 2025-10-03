@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,11 +18,13 @@ import com.example.healthtracker.R
 import com.example.healthtracker.adapters.EmojiAdapter
 import com.example.healthtracker.adapters.MoodAdapter
 import com.example.healthtracker.models.MoodEntry
+import com.example.healthtracker.utils.GreetingHelper
 import com.example.healthtracker.utils.HealthPreferenceManager
 import com.example.healthtracker.utils.SensorHelper
 
 class MoodJournalFragment : Fragment() {
 
+    private lateinit var tvTotalEntries: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var moodAdapter: MoodAdapter
     private lateinit var fabAdd: FloatingActionButton
@@ -44,6 +47,9 @@ class MoodJournalFragment : Fragment() {
         sharedPrefsManager = HealthPreferenceManager.getInstance(requireContext())
         sensorHelper = SensorHelper(requireContext())
 
+        val tvGreeting: TextView = view.findViewById(R.id.tv_greeting)
+        GreetingHelper.setGreeting(requireContext(), tvGreeting, "Mood")
+
         setupUI(view)
         loadMoodEntries()
 //        setupSensors()
@@ -52,6 +58,7 @@ class MoodJournalFragment : Fragment() {
     private fun setupUI(view: View) {
         recyclerView = view.findViewById(R.id.recycler_view_moods)
         fabAdd = view.findViewById(R.id.fab_add_mood)
+        tvTotalEntries = view.findViewById(R.id.tv_total_entries)
 
         moodAdapter = MoodAdapter(
             moodEntries = moodEntries,
@@ -79,6 +86,7 @@ class MoodJournalFragment : Fragment() {
     private fun loadMoodEntries() {
         moodEntries.clear()
         moodEntries.addAll(sharedPrefsManager.getMoodEntries().sortedByDescending { it.timestamp })
+        tvTotalEntries.text = "${moodEntries.size}"
         moodAdapter.notifyDataSetChanged()
     }
 
@@ -104,7 +112,9 @@ class MoodJournalFragment : Fragment() {
         )
 
         recyclerViewEmojis.apply {
-            layoutManager = GridLayoutManager(context, 5)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            clipToPadding = false
+            setPadding(16, 0, 16, 0)
             adapter = emojiAdapter
         }
 
@@ -125,6 +135,7 @@ class MoodJournalFragment : Fragment() {
                 moodEntries.add(0, moodEntry)
                 saveMoodEntries()
                 moodAdapter.notifyItemInserted(0)
+                tvTotalEntries.text = "${moodEntries.size}"
 
                 Toast.makeText(requireContext(), "Mood logged successfully!", Toast.LENGTH_SHORT).show()
             }
@@ -201,7 +212,9 @@ class MoodJournalFragment : Fragment() {
         )
 
         recyclerViewEmojis.apply {
-            layoutManager = GridLayoutManager(context, 5)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            clipToPadding = false
+            setPadding(16, 0, 16, 0)
             adapter = emojiAdapter
         }
 
@@ -231,7 +244,7 @@ class MoodJournalFragment : Fragment() {
                 moodEntries.remove(moodEntry)
                 saveMoodEntries()
                 moodAdapter.notifyItemRemoved(position)
-
+                tvTotalEntries.text = "${moodEntries.size}"
                 Toast.makeText(requireContext(), "Mood entry deleted", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Cancel", null)

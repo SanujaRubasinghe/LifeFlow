@@ -1,28 +1,28 @@
 package com.example.healthtracker.activities
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Button
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.EditText
-import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
 import com.example.healthtracker.R
 import com.example.healthtracker.utils.HealthPreferenceManager
+import com.google.android.material.button.MaterialButton
+import kotlin.math.log
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var genderSpinner: Spinner
-    private lateinit var nameEditText: EditText
-    private lateinit var ageEditText: EditText
-    private lateinit var emailEditText: EditText
-    private lateinit var passwordEditText: EditText
-    private lateinit var registerBtn: Button
 
+    private lateinit var nameEditText: EditText
+    private lateinit var usernameEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var confirmPasswordEditText: EditText
+    private lateinit var passwordStatusText: TextView
+    private lateinit var registerBtn: MaterialButton
+    private lateinit var loginBtn: TextView
     private lateinit var sharedPreferences: HealthPreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,45 +32,63 @@ class RegisterActivity : AppCompatActivity() {
 
         sharedPreferences = HealthPreferenceManager.getInstance(this)
 
-        genderSpinner = findViewById(R.id.spinner_gender)
         nameEditText = findViewById(R.id.name)
-        ageEditText = findViewById(R.id.age)
-        emailEditText = findViewById(R.id.email)
+        usernameEditText = findViewById(R.id.username)
         passwordEditText = findViewById(R.id.password)
+        confirmPasswordEditText = findViewById(R.id.confirm_password)
+        passwordStatusText = findViewById(R.id.password_match_status)
         registerBtn = findViewById(R.id.btn_register)
+        loginBtn = findViewById(R.id.btn_login)
 
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.gender_options,
-            android.R.layout.simple_spinner_item
-        ).also {adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            genderSpinner.adapter = adapter
-        }
+        confirmPasswordEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
 
-        registerBtn.setOnClickListener {
-            saveUserData()
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val password = passwordEditText.text.toString()
+                val confirm = s.toString()
+
+                if (confirm.isEmpty()) {
+                    passwordStatusText.text = ""
+                } else if (confirm == password) {
+                    passwordStatusText.setTextColor(getColor(R.color.success_color))
+                    passwordStatusText.text = "Passwords match"
+                } else {
+                    passwordStatusText.setTextColor(getColor(R.color.error_color))
+                    passwordStatusText.text = "Passwords do not match"
+                }
+            }
+        })
+
+        registerBtn.setOnClickListener { saveUserData() }
+
+        loginBtn.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 
     private fun saveUserData() {
         val name = nameEditText.text.toString()
-        val age = ageEditText.text.toString()
-        val email = emailEditText.text.toString()
+        val username = usernameEditText.text.toString()
         val password = passwordEditText.text.toString()
-        val gender = genderSpinner.selectedItem.toString()
+        val confirmPassword = confirmPasswordEditText.text.toString()
 
-        if (name.isEmpty() || age.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (name.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (password != confirmPassword) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
             return
         }
 
         val userProfile = HealthPreferenceManager.UserProfile(
             name,
-            age.toInt(),
-            email,
-            password,
-            gender)
+            username,
+            password
+        )
 
         sharedPreferences.saveUserProfile(userProfile)
         sharedPreferences.setFirstLoginDate()

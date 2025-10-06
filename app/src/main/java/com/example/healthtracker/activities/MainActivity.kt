@@ -160,7 +160,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun startStepService() {
         val intent = Intent(this, StepTrackingService::class.java)
-        startService(intent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
     }
 
 //    private fun setupHydrationReminders() {
@@ -209,8 +213,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun showWelcomeMessage() {
         Toast.makeText(
             this,
@@ -219,45 +221,4 @@ class MainActivity : AppCompatActivity() {
         ).show()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
-                true
-            }
-            R.id.action_share -> {
-                shareAppStats()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun shareAppStats() {
-        val habits = sharedPrefsManager.getHabits()
-        val moods = sharedPrefsManager.getMoodEntries()
-        val today = android.text.format.DateFormat.format("yyyy-MM-dd", System.currentTimeMillis()).toString()
-
-        val completedHabits = habits.count { it.isCompletedForDate(today) }
-        val totalHabits = habits.size
-        val recentMood = moods.lastOrNull()?.emoji ?: "😐"
-
-        val shareText = "My Wellness Progress Today:\n" +
-                "✅ Completed $completedHabits out of $totalHabits habits\n" +
-                "🎭 Current mood: $recentMood\n" +
-                "\nTracking my wellness with Wellness App! 🌟"
-
-        val shareIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, shareText)
-        }
-
-        startActivity(Intent.createChooser(shareIntent, "Share your wellness progress"))
-    }
 }

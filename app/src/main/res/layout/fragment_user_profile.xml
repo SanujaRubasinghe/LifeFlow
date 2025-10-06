@@ -38,7 +38,7 @@
                 android:paddingTop="8dp">
 
                 <TextView
-                    android:id="@+id/user_name"
+                    android:id="@+id/user_full_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="User Name"
@@ -47,10 +47,10 @@
                     android:textColor="@color/primary_text_color" />
 
                 <TextView
-                    android:id="@+id/user_email"
+                    android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="user@example.com"
+                    android:text="example"
                     android:textSize="14sp"
                     android:textColor="@color/primary_text_color"
                     android:layout_marginTop="4dp" />

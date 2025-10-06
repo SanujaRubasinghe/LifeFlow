@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:text="Track your daily emotions and mood patterns. Shake your phone for quick entry!"
                         android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textColor="@color/white"
                         android:lineSpacingExtra="4dp" />
 
                     <!-- Quick Stats -->

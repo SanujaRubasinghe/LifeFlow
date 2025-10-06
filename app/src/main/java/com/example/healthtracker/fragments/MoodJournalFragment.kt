@@ -101,7 +101,7 @@ class MoodJournalFragment : Fragment() {
 
             tvAvgMood.text = mostCommonEmoji
         } else {
-            tvAvgMood.text = "No mood data"
+            tvAvgMood.text = "-"
         }
     }
 

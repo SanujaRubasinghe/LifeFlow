@@ -102,10 +102,8 @@ class HealthPreferenceManager private constructor(context: Context) {
 
     data class UserProfile(
         val name: String,
-        val age: Int,
-        val email: String,
+        val userName: String,
         val password: String,
-        val gender: String,
     )
 
     fun saveUserProfile(profile: UserProfile) {

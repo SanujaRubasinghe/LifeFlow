@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.health.connect.datatypes.units.Percentage
 import android.os.Build
 import android.os.Bundle
 import android.text.format.DateFormat
@@ -32,6 +33,7 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 import org.w3c.dom.Text
 
 import kotlin.collections.*
+import kotlin.math.floor
 
 class HabitTrackerFragment : Fragment() {
 
@@ -46,6 +48,7 @@ class HabitTrackerFragment : Fragment() {
     private lateinit var tvStepCount: TextView
     private lateinit var tvStepGoal: TextView
     private lateinit var tvStepStatus: TextView
+    private lateinit var tvStepPercentage: TextView
 
     private var stepGoal: Int = 10000
 
@@ -74,6 +77,7 @@ class HabitTrackerFragment : Fragment() {
         tvStepCount = view.findViewById(R.id.tv_step_count)
         tvStepGoal = view.findViewById(R.id.tv_step_goal)
         tvStepStatus = view.findViewById(R.id.tv_step_status)
+        tvStepPercentage = view.findViewById(R.id.tv_step_percentage)
 
         stepGoal = sharedPrefsManager.getStepGoal()
         progressStep.max = stepGoal
@@ -127,6 +131,8 @@ class HabitTrackerFragment : Fragment() {
         fabAdd.setOnClickListener {
             showAddHabitDialog()
         }
+
+        updateSteps(sharedPrefsManager.getStepsForToday())
     }
 
     private fun setupSensors() {
@@ -148,6 +154,7 @@ class HabitTrackerFragment : Fragment() {
     private fun updateSteps(currentSteps: Int) {
         tvStepCount.text = currentSteps.toString()
         progressStep.setProgress(currentSteps, true)
+        tvStepPercentage.text = "${floor((sharedPrefsManager.getStepsForToday() / stepGoal).toDouble())} %"
 
         tvStepStatus.text = when {
             currentSteps >= stepGoal -> "Goal Achieved 🎉"

@@ -177,8 +177,8 @@
                     android:textColor="?attr/colorOnSurfaceVariant"
                     android:layout_marginBottom="16dp" />
 
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/barChartSteps"
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/step_chart"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:layout_marginBottom="16dp" />

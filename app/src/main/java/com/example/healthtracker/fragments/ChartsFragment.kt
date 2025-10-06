@@ -15,10 +15,8 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.example.healthtracker.R
-import com.example.healthtracker.models.MoodEntry
 import com.example.healthtracker.utils.GreetingHelper
 import com.example.healthtracker.utils.HealthPreferenceManager
-import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.LimitLine
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,7 +29,7 @@ class ChartsFragment : Fragment() {
     private lateinit var tvMoodStats: TextView
     private lateinit var tvHabitStats: TextView
 
-    private lateinit var barChartSteps: BarChart
+    private lateinit var stepsChart: LineChart
     private var stepGoal: Int = 10000
     private lateinit var sharedPrefsManager: HealthPreferenceManager
 
@@ -59,22 +57,21 @@ class ChartsFragment : Fragment() {
         habitChart = view.findViewById(R.id.habit_chart)
         tvMoodStats = view.findViewById(R.id.tv_mood_stats)
         tvHabitStats = view.findViewById(R.id.tv_habit_stats)
-        barChartSteps = view.findViewById(R.id.barChartSteps)
+        stepsChart = view.findViewById(R.id.step_chart)
 
         stepGoal = sharedPrefsManager.getStepGoal()
 
         setupMoodChart()
         setupHabitChart()
-        setupStepChart()
+        setupStepsChart()
     }
 
-    private fun setupStepChart() {
-        barChartSteps.apply {
+    private fun setupStepsChart() {
+        stepsChart.apply {
             description.isEnabled = false
-            setDrawGridBackground(false)
-            setDrawBarShadow(false)
-            setFitBars(true)
             setTouchEnabled(true)
+            isDragEnabled = true
+            setScaleEnabled(true)
             setPinchZoom(false)
             setBackgroundColor(Color.WHITE)
 
@@ -88,18 +85,19 @@ class ChartsFragment : Fragment() {
                 axisMinimum = 0f
                 axisMaximum = (stepGoal * 1.5).toFloat()
                 setDrawGridLines(true)
+
+                // Horizontal limit line for goal
+                val limitLine = LimitLine(stepGoal.toFloat(), "Goal")
+                limitLine.lineColor = Color.RED
+                limitLine.lineWidth = 2f
+                limitLine.textColor = Color.RED
+                limitLine.textSize = 12f
+                removeAllLimitLines()
+                addLimitLine(limitLine)
             }
 
             axisRight.isEnabled = false
-            legend.isEnabled = false
-
-            // Add horizontal line for step goal
-            val limitLine = LimitLine(stepGoal.toFloat(), "Goal")
-            limitLine.lineColor = Color.RED
-            limitLine.lineWidth = 2f
-            limitLine.textColor = Color.RED
-            limitLine.textSize = 12f
-            axisLeft.addLimitLine(limitLine)
+            legend.isEnabled = true
         }
     }
 
@@ -157,8 +155,40 @@ class ChartsFragment : Fragment() {
     private fun loadCharts() {
         loadMoodChart()
         loadHabitChart()
+        loadStepsChart()
         updateStats()
     }
+
+    private fun loadStepsChart() {
+        val stepEntries = sharedPrefsManager.getStepEntries()
+        val last7Days = getLast7Days()
+        val entries = ArrayList<Entry>()
+        val labels = ArrayList<String>()
+
+        last7Days.forEachIndexed { index, date ->
+            val daySteps = stepEntries.find { it.date == date }?.stepCount ?: 0f
+            entries.add(Entry(index.toFloat(), daySteps.toFloat()))
+            labels.add(formatDateForChart(date))
+        }
+
+        val dataSet = LineDataSet(entries, "Daily Steps").apply {
+            color = Color.BLUE
+            setCircleColor(Color.BLUE)
+            lineWidth = 2f
+            circleRadius = 4f
+            setDrawCircleHole(false)
+            valueTextSize = 10f
+            setDrawFilled(true)
+            fillColor = Color.BLUE
+            fillAlpha = 50
+        }
+
+        val lineData = LineData(dataSet)
+        stepsChart.data = lineData
+        stepsChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        stepsChart.invalidate()
+    }
+
 
     private fun loadMoodChart() {
         val moodEntries = sharedPrefsManager.getMoodEntries()
@@ -316,6 +346,6 @@ class ChartsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        loadCharts() // Refresh charts when fragment becomes visible
+        loadCharts()
     }
 }

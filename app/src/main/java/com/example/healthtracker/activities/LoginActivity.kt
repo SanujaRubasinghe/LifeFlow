@@ -16,7 +16,7 @@ import com.example.healthtracker.utils.HealthPreferenceManager
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var tvLoginData: TextView
-    private lateinit var email: EditText
+    private lateinit var userName: EditText
     private lateinit var password: EditText
     private lateinit var loginBtn: Button
     private lateinit var tvSignUp: TextView
@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
-        email = findViewById(R.id.emailEditText)
+        userName = findViewById(R.id.usernameEditText)
         password = findViewById(R.id.passwordEditText)
         loginBtn = findViewById(R.id.loginButton)
         tvSignUp = findViewById(R.id.signUpLink)
@@ -38,10 +38,10 @@ class LoginActivity : AppCompatActivity() {
         val user = sharedPreferenceManager.getUserProfile()
 
         tvLoginData = findViewById(R.id.login_data)
-        tvLoginData.text = "Email: ${user?.email}, Password: ${user?.password}"
+        tvLoginData.text = "UserName: ${user?.userName}, Password: ${user?.password}"
 
         loginBtn.setOnClickListener {
-            validateLogin(email.text.toString(), password.text.toString())
+            validateLogin(userName.text.toString(), password.text.toString())
         }
 
         tvSignUp.setOnClickListener {
@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
     private fun validateLogin(email: String, password: String) {
         val userProfile = sharedPreferenceManager.getUserProfile()
 
-        if (email != userProfile?.email || password != userProfile.password) {
+        if (email != userProfile?.userName || password != userProfile.password) {
             tvErrorMessage.visibility = View.VISIBLE
         } else {
             tvErrorMessage.visibility = View.GONE

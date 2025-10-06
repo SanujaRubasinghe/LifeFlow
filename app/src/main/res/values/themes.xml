@@ -30,9 +30,9 @@
     </style>
 
     <style name="ModernSecondaryButton" parent="Widget.Material3.Button">
-        <item name="backgroundTint">@color/accent_color</item>
+        <item name="backgroundTint">@color/logout_btn_color</item>
         <item name="android:textColor">@color/white</item>
-        <item name="strokeColor">@color/accent_color</item>
+        <item name="strokeColor">@color/logout_btn_color</item>
         <item name="cornerRadius">16dp</item>
         <item name="strokeWidth">2dp</item>
     </style>

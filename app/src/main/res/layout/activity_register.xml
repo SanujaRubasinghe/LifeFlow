@@ -9,7 +9,6 @@
     android:background="@color/bg_color"
     android:padding="24dp">
 
-    <!-- Title -->
     <TextView
         android:id="@+id/main_title"
         android:layout_width="0dp"
@@ -24,7 +23,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp" />
 
-    <!-- Subtitle -->
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="0dp"
@@ -37,24 +35,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 
-    <!-- Form Scrollable Section -->
     <ScrollView
         android:id="@+id/form_scroll"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/subtitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_register"
-        android:layout_marginTop="32dp">
+        android:layout_marginTop="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Name Input -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/ModernTextInputLayout"
                 android:layout_width="match_parent"
@@ -70,24 +66,22 @@
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Email Input -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/ModernTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:startIconDrawable="@drawable/ic_email">
+                app:startIconDrawable="@drawable/ic_person">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email"
+                    android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email Address"
-                    android:inputType="textEmailAddress"
+                    android:hint="Username"
+                    android:inputType="textPersonName"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Password Input -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/ModernTextInputLayout"
                 android:layout_width="match_parent"
@@ -105,43 +99,35 @@
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Age Input -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/ModernTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:startIconDrawable="@drawable/ic_cake">
+                app:startIconDrawable="@drawable/ic_lock"
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/age"
+                    android:id="@+id/confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Age"
-                    android:inputType="number"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Gender Input -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/ModernTextInputLayout"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/password_match_status"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:startIconDrawable="@drawable/ic_gender">
-
-                <Spinner
-                    android:id="@+id/spinner_gender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Gender"
-                    android:textSize="16sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:text=""
+                android:textSize="14sp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/error_color" />
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- Register Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_register"
         style="@style/ModernPrimaryButton"
@@ -155,9 +141,9 @@
         app:layout_constraintBottom_toTopOf="@id/login_container"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="64dp" />
 
-    <!-- Login Prompt + Link (Horizontal Chain) -->
+    <!-- Login Section -->
     <LinearLayout
         android:id="@+id/login_container"
         android:layout_width="wrap_content"
@@ -165,10 +151,10 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="64dp">
 
         <TextView
-            android:id="@+id/login_prompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Already have an account? "

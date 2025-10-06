@@ -209,12 +209,20 @@ class HealthPreferenceManager private constructor(context: Context) {
 
         val todayEntry = entries.find { it.date == date }
         if (todayEntry != null) {
-            todayEntry.stepCount += steps
+            todayEntry.stepCount = steps
         } else {
             entries.add(StepCountEntry(date = date, stepCount = steps))
         }
 
         saveStepEntries(entries)
+    }
+
+    fun getStepsForToday(): Int {
+        val today = DateFormat.format("yyyy-MM-dd", System.currentTimeMillis()).toString()
+        val entries = getStepEntries()
+
+        val todayEntry = entries.find { it.date == today }
+        return todayEntry?.stepCount ?: 0
     }
 
     // Notifications settings

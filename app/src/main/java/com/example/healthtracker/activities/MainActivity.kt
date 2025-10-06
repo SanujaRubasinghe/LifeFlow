@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -23,6 +24,7 @@ import com.example.healthtracker.fragments.MoodJournalFragment
 import com.example.healthtracker.fragments.SettingsFragment
 import com.example.healthtracker.fragments.UserProfileFragment
 import com.example.healthtracker.services.HydrationReminderWorker
+import com.example.healthtracker.services.StepTrackingService
 import com.example.healthtracker.utils.HealthPreferenceManager
 import java.util.concurrent.TimeUnit
 
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         setupUI()
         requestNotificationPermission()
+        requestActivityRecognitionPermission()
 
         // Load initial fragment
         if (savedInstanceState == null) {
@@ -139,6 +142,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun requestActivityRecognitionPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                this,
+                    Manifest.permission.ACTIVITY_RECOGNITION
+            ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                notificationPermissionLauncher.launch(Manifest.permission.ACTIVITY_RECOGNITION)
+            } else {
+                startStepService()
+            }
+        } else {
+            startStepService()
+        }
+    }
+
+    private fun startStepService() {
+        val intent = Intent(this, StepTrackingService::class.java)
+        startService(intent)
+    }
+
 //    private fun setupHydrationReminders() {
 //        if (sharedPrefsManager.isHydrationEnabled()) {
 //            val intervalHours = sharedPrefsManager.getHydrationInterval().toLong()
@@ -184,6 +208,8 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
+
+
 
     private fun showWelcomeMessage() {
         Toast.makeText(

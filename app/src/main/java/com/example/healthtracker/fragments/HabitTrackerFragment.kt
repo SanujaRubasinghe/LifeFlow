@@ -1,6 +1,11 @@
 package com.example.healthtracker.fragments
 
 import android.app.AlertDialog
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.LayoutInflater
@@ -10,13 +15,16 @@ import android.widget.EditText
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.impl.utils.ForceStopRunnable
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.example.healthtracker.R
 import com.example.healthtracker.adapters.HabitAdapter
 import com.example.healthtracker.models.Habit
+import com.example.healthtracker.services.StepTrackingService
 import com.example.healthtracker.utils.GreetingHelper
 import com.example.healthtracker.utils.HealthPreferenceManager
 import com.example.healthtracker.utils.SensorHelper
@@ -76,6 +84,30 @@ class HabitTrackerFragment : Fragment() {
         setupSensors()
     }
 
+    override fun onStart() {
+        super.onStart()
+        val filter = IntentFilter(StepTrackingService.ACTION_STEPS_UPDATED)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requireContext().registerReceiver(stepReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            ContextCompat.registerReceiver(
+                requireContext(),
+                stepReceiver,
+                filter,
+                ContextCompat.RECEIVER_NOT_EXPORTED
+            )
+        }
+
+        // Load saved value on UI start
+        val savedSteps = HealthPreferenceManager.getInstance(requireContext()).getStepsForToday()
+        updateSteps(savedSteps)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        requireContext().unregisterReceiver(stepReceiver)
+    }
+
     private fun setupUI(view: View) {
         recyclerView = view.findViewById(R.id.recycler_view_habits)
         fabAdd = view.findViewById(R.id.fab_add_habit)
@@ -121,6 +153,15 @@ class HabitTrackerFragment : Fragment() {
             currentSteps >= stepGoal -> "Goal Achieved 🎉"
             currentSteps > stepGoal / 2 -> "Almost there!"
             else -> "Keep Going!"
+        }
+    }
+
+    private val stepReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == StepTrackingService.ACTION_STEPS_UPDATED) {
+                val steps = intent.getIntExtra(StepTrackingService.EXTRA_STEPS, 0)
+                updateSteps(steps)
+            }
         }
     }
 

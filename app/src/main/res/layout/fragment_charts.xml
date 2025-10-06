@@ -74,9 +74,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="@color/white"
                     android:lineSpacingExtra="4dp"
-                    android:background="@drawable/rounded_background"
+                    android:background="@drawable/bg_stat_card"
                     android:padding="12dp"
                     app:cornerRadius="8dp" />
 
@@ -130,9 +130,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="@color/white"
                     android:lineSpacingExtra="4dp"
-                    android:background="@drawable/rounded_background"
+                    android:background="@drawable/bg_stat_card"
                     android:padding="12dp"
                     app:cornerRadius="8dp" />
 

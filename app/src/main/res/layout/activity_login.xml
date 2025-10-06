@@ -8,6 +8,37 @@
     android:background="#FFFFFF"
     tools:context=".activities.LoginActivity">
 
+    <!-- Background Circles -->
+    <View
+        android:id="@+id/circle_top_left"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/circle_accent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="-40dp"
+        android:layout_marginTop="-40dp" />
+
+    <View
+        android:id="@+id/circle_bottom_right"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/circle_secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="-50dp"
+        android:layout_marginBottom="-50dp" />
+
+    <View
+        android:id="@+id/circle_middle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/circle_accent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="-20dp"
+        android:layout_marginTop="100dp" />
+
     <!-- App Title -->
     <TextView
         android:id="@+id/titleText"
@@ -144,12 +175,11 @@
         app:layout_constraintTop_toBottomOf="@id/forgotPasswordText" />
 
     <!-- Sign Up Section -->
-
     <TextView
         android:id="@+id/signUpText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="0dp"
         android:text="Don't have an account?"
         android:textColor="#666666"
@@ -157,20 +187,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/signUpLink"
         app:layout_constraintTop_toBottomOf="@id/loginButton"
-        app:layout_constraintVertical_bias="0.457" />
+        app:layout_constraintVertical_bias="0.22" />
 
     <TextView
         android:id="@+id/signUpLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
+        android:layout_marginEnd="64dp"
         android:padding="8dp"
         android:text="Sign Up"
-        android:textColor="#2196F3"
+        android:textColor="@color/primary_color"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/signUpText"
         app:layout_constraintEnd_toEndOf="@id/loginButton"
-        app:layout_constraintTop_toTopOf="@id/signUpText" />
+        app:layout_constraintTop_toTopOf="@id/signUpText"
+        app:layout_constraintVertical_bias="0.437" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

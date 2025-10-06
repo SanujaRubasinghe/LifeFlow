@@ -9,6 +9,27 @@
     android:background="@color/bg_color"
     android:padding="24dp">
 
+    <!-- Background Circles -->
+    <View
+        android:id="@+id/circle_top_right"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/circle_accent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="-30dp"
+        android:layout_marginTop="-30dp" />
+
+    <View
+        android:id="@+id/circle_bottom_left"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/circle_secondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="-40dp"
+        android:layout_marginBottom="-40dp" />
+
     <TextView
         android:id="@+id/main_title"
         android:layout_width="0dp"

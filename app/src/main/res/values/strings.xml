@@ -11,4 +11,14 @@
     <string name="widget_title">Daily Habits</string>
     <string name="widget_completed">%1$d/%2$d completed</string>
     <string name="widget_updated">Updated: %1$s</string>
+    <string name="ob_1_main_title">Welcome To HealthTracker</string>
+    <string name="ob_1_sub_title">Your Personal Companion for Daily Health</string>
+    <string name="ob_2_main_title">Track Your Daily Habits</string>
+    <string name="ob_2_sub_title">Monitor water intake, exercising and meditation</string>
+    <string name="ob_3_main_title">Log Your Mood</string>
+    <string name="ob_3_sub_title">Capture your feelings with emojis and notes</string>
+    <string name="ob_4_main_title">Stay Hydrated</string>
+    <string name="ob_4_sub_title">Get reminders to drink water and maintain your wellness</string>
+    <string name="ob_5_main_title">Your wellness made simple</string>
+    <string name="ob_5_sub_title">Home-screen widget, step tracking and weekly charts</string>
 </resources>
